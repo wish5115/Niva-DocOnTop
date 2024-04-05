@@ -24,5 +24,10 @@ jobs:
 
           gh release create "$tag" \
             --title="$tag" \
-            --draft \
-            --attach-release-file release.zip
+            --draft
+
+      - name: Upload release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "$tag" release.zip
