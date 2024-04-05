@@ -25,7 +25,7 @@ DocOnTop 就是为这个需求而开发的。
 
 ## 使用
 
-在托盘图标里配置好参数就可以了。
+在托盘图标里选择配置菜单，打开设置窗口，然后设置好相应参数就可以了。
 
 ## 下载
 
@@ -37,4 +37,4 @@ DocOnTop 就是为这个需求而开发的。
 
 # 鸣谢
 
-该工具使用了 [Niva](https://bramblex.github.io/niva/) 和 [easyEMD](https://github.com/Ionaru/easy-markdown-editor) 构建。
+该工具使用了 [Niva](https://bramblex.github.io/niva/) 和 [easyMDE](https://github.com/Ionaru/easy-markdown-editor) 构建。
