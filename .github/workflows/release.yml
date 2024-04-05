@@ -21,3 +21,4 @@ jobs:
           gh release create "$tag" \
             --title="$tag" \
             --draft
+            assets/* components/* webfonts/* index.html index.js niva.json settings.html settings.js
