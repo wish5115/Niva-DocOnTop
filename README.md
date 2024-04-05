@@ -11,15 +11,15 @@ DocOnTop 就是为这个需求而开发的。
 
 这是托盘菜单
 
-![](screenshots/app-20240402200049126.webp)
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240402200049126.png)
 
 这是主窗口
 
-![](screenshots/app-20240402195913205.webp)
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240402195913205.png)
 
 这是配置项
 
-![](screenshots/app-20240405153218437.webp)
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240405153218437.png)
 
 
 
