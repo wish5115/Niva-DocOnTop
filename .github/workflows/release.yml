@@ -1,0 +1,28 @@
+name: Release DocOnTop
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build DocOnTop
+        run: |
+          zip -r release.zip assets components webfonts index.html index.js niva.json settings.html settings.js
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+
+          gh release create "$tag" \
+            --title="$tag" \
+            --draft \
+            --attach-release-file release.zip
