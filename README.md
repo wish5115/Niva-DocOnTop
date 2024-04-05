@@ -9,15 +9,15 @@ DocOnTop 就是为这个需求而开发的。
 # 预览
 
 
-这是托盘菜单
+**这是托盘菜单**
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240402200049126.png)
 
-这是主窗口
+**这是主窗口**
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240402195913205.png)
 
-这是配置项
+**这是配置项**
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240405153218437.png)
 
@@ -29,3 +29,8 @@ DocOnTop 就是为这个需求而开发的。
 
 ## 下载
 
+[DocOnTop-1.0.0](https://github.com/wish5115/Niva-DocOnTop/releases/tag/1.0.0)
+
+# Issues
+
+[DocOnTop/issues](https://github.com/wish5115/Niva-DocOnTop/issues)
