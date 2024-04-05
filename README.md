@@ -44,7 +44,7 @@ DocOnTop 就是为这个需求而开发的。
 
 ## 下载
 
-[DocOnTop-1.0.0](https://github.com/wish5115/Niva-DocOnTop/releases/tag/1.0.0)
+[DocOnTop](https://github.com/wish5115/Niva-DocOnTop/releases/tag)
 
 # Issues
 
