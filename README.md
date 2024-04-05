@@ -21,6 +21,21 @@ DocOnTop 就是为这个需求而开发的。
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240405153218437.png)
 
+**这是样式**
+
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-list.png)
+
+<div>
+
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-default.png)
+
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-monokai.png)
+
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-solarized-light.png)
+
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-solarized-dark.png)
+
+</div>
 
 
 ## 使用
