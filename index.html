@@ -76,11 +76,51 @@
             0% { opacity: 1; }
             100% { opacity: 0; display: none; }
         }
+
+        /* 设置选中文本的背景色 无主题和默认样式 */
+        :is(.cm-s-none, .cm-s-default) .CodeMirror-selected {
+            background: #e8e8e8 !important;
+        }
+        /* 设置活动选择区（鼠标拖动选择时的反色块）的背景色 无主题和默认样式 */
+        :is(.cm-s-none, .cm-s-default) .CodeMirror-focused .CodeMirror-selected {
+            background: #e8e8e8 !important;
+        }
+        /* 设置选中文本的背景色 monokai主题 */
+        .cm-s-monokai .CodeMirror-selected {
+            background: #444 !important;
+        }
+        /* 设置活动选择区（鼠标拖动选择时的反色块）的背景色 monokai主题 */
+        .cm-s-monokai .CodeMirror-focused .CodeMirror-selected {
+            background: #444 !important;
+        }
+        /* 如果你希望连同文字一起高亮，设置内边距，让背景色填充到文字内，codemirror6以上生效 */
+        .CodeMirror-selectedtext {
+            background-color: transparent !important;
+        }
+        /* 当前行高亮及不同主题下的样式 */
+        .cm-highlight-line {
+            background-color: #e8e8e8;
+        }
+        .cm-s-solarized.cm-s-light .cm-highlight-line{
+            background-color: #ede8d7;
+        }
+        .cm-s-solarized.cm-s-dark  .cm-highlight-line{
+            background-color: #163541;
+        }
+        .cm-s-monokai .cm-highlight-line {
+            background-color: #333;
+        }
+        /* 编辑器边距 */
+        .EasyMDEContainer .CodeMirror{
+            padding: 2px!important;
+        }
     </style>
     <!-- <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"> -->
     <!-- https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css -->
     <!-- /assets/font-awesome-all.min.css -->
      <link rel="stylesheet" href="./assets/easymde.min.css">
+     <link rel="stylesheet" href="./assets/monokai.css">
+     <link rel="stylesheet" href="./assets/solarized.css">
      <script src="./assets/easymde.min.js"></script>
      <script src="./assets/toolbar.js"></script>
 </head>
@@ -91,12 +131,14 @@
     <div id="overlay"></div>
     <div id="tooltip" class="hidden"></div>
     <script>
+        let theme = localStorage.getItem("theme") || "none";
         const easyMDE = new EasyMDE({
           element: document.getElementById('content'),
           spellChecker: false,
           //hideIcons: ["guide", "side-by-side", "fullscreen"],
           toolbar: toolbar,
-          shortcuts: {"task-list":"Cmd-T"}
+          shortcuts: {"task-list":"Cmd-T"},
+          theme: theme,
         });
 
         const overlay = document.getElementById('overlay');

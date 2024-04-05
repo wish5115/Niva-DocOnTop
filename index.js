@@ -254,6 +254,21 @@ document.addEventListener("click", (e) => {
   })
 }
 
+easyMDE.codemirror.on('cursorActivity', function(cm) {
+  var cursor = cm.getCursor();
+  var line = cursor.line;
+
+  // 移除之前的所有高亮
+  cm.operation(function() {
+    cm.eachLine(function(lineHandle) {
+      cm.removeLineClass(lineHandle, 'background', 'cm-highlight-line');
+    });
+  });
+
+  // 为当前光标所在行添加高亮样式
+  cm.addLineClass(line, 'background', 'cm-highlight-line');
+});
+
 ////////////////////////////////////// 监控tasklist按钮样式 //////////////////////////////////
 // 更新tasklist按钮样式
 const updateTaskListBtnStyle = () => {
@@ -294,6 +309,10 @@ if(useEditor) {
         if(settings.width!==width || settings.height!==height) window.setInnerSize({ width: settings.width-0 || defWidth, height: settings.height-0 || defHeight })
       }
       reloadOnExternalChange = settings.externalChange ? true : false
+      if(theme !== settings.theme){
+        easyMDE.codemirror.setOption("theme", settings.theme)
+        theme = settings.theme
+      }
       if(settings.shortcut && shortcutKey !== settings.shortcut) {
         shortcutKey = settings.shortcut
         try{
@@ -352,7 +371,7 @@ if(useEditor) {
         "alwaysOnTop": true,
         "devtools": true,
         "size": {
-          "height": 380,
+          "height": 465,
           "width": 455
         }
       })

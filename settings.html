@@ -92,6 +92,12 @@
             font-size: 12px;
             margin-left: 8px;
         }
+        .theme select{
+            height: 40px;
+            min-height: 40px;
+            width: 150px;
+            font-size:18px;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +121,16 @@
     <label for="externalChangeAuto">自动加载</label>
     <input type="radio" id="externalChangeAsk" name="externalChange">
     <label for="externalChangeAsk">询问我</label>
+</div>
+<div class="label">编辑器主题</div>
+<div class="theme">
+    <select id="theme">
+        <option value="none">无主题</option>
+        <option value="default">Default</option>
+        <option value="monokai">Monokai</option>
+        <option value="solarized light">Solarized light</option>
+        <option value="solarized dark">Solarized dark</option>
+    </select>
 </div>
 <div class="label">
     <span>全局快捷键</span>

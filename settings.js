@@ -10,6 +10,7 @@
   document.querySelector("#externalChangeAuto").checked = externalChangeAutoChecked
   document.querySelector("#externalChangeAsk").checked = !externalChangeAutoChecked
   document.querySelector("#shortcut").value = localStorage.getItem('shortcut') || 'CommandOrControl+Shift+Backslash'
+  document.querySelector("#theme").value = localStorage.getItem('theme') || 'none'
 
   // 文件浏览
   document.querySelector("#select").addEventListener("click", async () => {
@@ -37,18 +38,21 @@
     const height = document.querySelector("#height").value
     const externalChange = document.querySelector("#externalChangeAuto").checked
     const shortcut = document.querySelector("#shortcut").value
+    const theme = document.querySelector("#theme").value
     localStorage.setItem('file', file)
     localStorage.setItem('width', width)
     localStorage.setItem('height', height)
     localStorage.setItem('externalChange', externalChange ? '1' : '')
     localStorage.setItem('shortcut', shortcut)
+    localStorage.setItem('theme', theme)
     save.value = '✓ 保存成功'
     const settings = {
       file: file,
       width: width,
       height: height,
       externalChange: externalChange,
-      shortcut: shortcut
+      shortcut: shortcut,
+      theme: theme,
     }
     await window.sendMessage(JSON.stringify(settings), 0)
     setTimeout(() => {
