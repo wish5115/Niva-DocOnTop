@@ -34,3 +34,7 @@ DocOnTop 就是为这个需求而开发的。
 # Issues
 
 [DocOnTop/issues](https://github.com/wish5115/Niva-DocOnTop/issues)
+
+# 鸣谢
+
+该工具使用了 [Niva](https://bramblex.github.io/niva/) 和 [easyEMD](https://github.com/Ionaru/easy-markdown-editor) 构建。
