@@ -21,7 +21,7 @@ DocOnTop 就是为这个需求而开发的。
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/app-20240405153218437.png)
 
-**这是样式**
+**这是主题样式**
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-list.png)
 
