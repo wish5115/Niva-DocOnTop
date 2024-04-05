@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        #timer {
+            font-size: 24px;
+        }
+        #historyList {
+            margin-top: 1em;
+            list-style-type: none;
+            padding: 0;
+        }
+        #historyList li {
+            border: 1px solid #ccc;
+            margin-bottom: 0.5em;
+            padding: 0.5em;
+        }
+        #start, #pause, #clear-history {
+            width: 80px;
+            height: 30px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        #start {
+            color: rgb(9, 96, 9);
+        }
+        #pause {
+            color: rgb(209, 30, 30);
+        }
+    </style>
+</head>
+<body>
+    <button id="start">开始</button>
+    <button id="pause">停止</button>
+    <button id="clear-history">清空</button>
+    <div id="timer">00:00:00.000</div>
+    <h3>历史记录</h3>
+    <ul id="historyList"></ul>
+
+    <script>
+        const startBtn = document.getElementById('start');
+        const pauseBtn = document.getElementById('pause');
+        const timerDisplay = document.getElementById('timer');
+        const historyList = document.getElementById('historyList');
+        let intervalId;
+        let startTime = 0;
+        let pausedTime = 0;
+        let isRunning = false;
+        let history = [];
+
+        function pad(num, size) {
+            let s = num.toString();
+            while (s.length < size) {
+                s = '0' + s;
+            }
+            return s;
+        }
+
+        function updateTimer() {
+            const now = performance.now();
+            let elapsedTime = (now - startTime - pausedTime) / 1000; // 转换成秒
+            let timeRecord = `${pad(Math.floor(elapsedTime / 3600), 2)}:${pad(Math.floor((elapsedTime % 3600) / 60), 2)}:${pad(Math.floor((elapsedTime % 3600) % 60), 2)}.${pad(Math.floor((elapsedTime * 1000) % 1000), 3)}`;
+
+            timerDisplay.textContent = timeRecord;
+        }
+
+        function addToHistory(timeRecord) {
+            const listItem = document.createElement('li');
+            listItem.textContent = timeRecord;
+            historyList.insertBefore(listItem, historyList.firstChild);
+            history.unshift(timeRecord);
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (!isRunning) {
+                startTime = performance.now() - pausedTime;
+                isRunning = true;
+                intervalId = setInterval(updateTimer, 10);
+            }
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            if (isRunning) {
+                clearInterval(intervalId);
+                isRunning = false;
+                addToHistory(timerDisplay.textContent);
+                pausedTime += performance.now() - startTime;
+            }
+        });
+
+        // 添加清空历史记录的按钮事件监听器
+        document.getElementById('clear-history').addEventListener('click', () => {
+            history = [];
+            while (historyList.firstChild) {
+                historyList.removeChild(historyList.firstChild);
+            }
+        });
+
+        // 初始化时清空历史记录列表
+        [...historyList.children].forEach(item => historyList.removeChild(item));
+        history.forEach(record => addToHistory(record));
+    </script>
+</body>
+</html>

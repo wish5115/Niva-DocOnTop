@@ -1,0 +1,26 @@
+{
+  "name": "DocOnTop",
+  "uuid": "91ecd8e8-200a-482f-abe8-5fc7ecdf3b84",
+  "icon": "assets/icon.png",
+  "window": {
+    "icon": "assets/icon.png",
+    "size": {
+      "height": 415,
+      "width": 315
+    },
+    "alwaysOnTop": true,
+    "closable": false,
+    "visible": false,
+    "devtools": true
+  },
+  "tray": {
+		"icon": "assets/icon.png",
+		"menu": [
+			{"type": "item", "id": 1, "label": "隐藏主窗口", "icon": "assets/window.png" },
+      {"type": "item", "id": 2, "label": "重新加载", "icon": "assets/reload.png" },
+      {"type": "item", "id": 3, "label": "定时器", "icon": "assets/timer.png" },
+			{"type": "item", "id": 4, "label": "配置", "icon": "assets/settings.png" },
+      {"type": "item", "id": 5, "label": "退出", "icon": "assets/exit.png" }
+		]
+	}
+}

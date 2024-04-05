@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<HTML>
+<html
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DocOnTop</title>
+<head>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        textarea{
+            width: 100%;
+            height: 100vh;
+            border: 1px solid #e5e5e5;
+            outline: none;
+            font-size: 16px;
+            padding: 5px;
+            overflow: auto;
+        }
+        .editor-toolbar{
+            padding: 4px!important;
+        }
+        .editor-toolbar button{
+            min-width: 24px!important;
+            width: 24px!important;
+            height: 24px!important;
+        }
+        .EasyMDEContainer .CodeMirror{
+            height: calc(100vh - 61px)!important;
+            padding: 5px;
+        }
+        .editor-statusbar{
+            padding: 6px 10px!important;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* 遮罩层颜色和透明度 */
+            z-index: 999; /* 确保遮罩层在所有元素之上 */
+            display: none; /* 初始隐藏 */
+        }
+
+        /* 使用 CSS 类 ".active" 来显示遮罩层 */
+        #overlay.active {
+            display: block;
+        }
+        #tooltip {
+            position: fixed;
+            top: 2px;
+            right: 2px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #e4e4e4;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            background-color: lightyellow;
+            color: rgb(237, 11, 11);
+            font-size: 12px;
+        }
+
+        #tooltip.hidden {
+            display: none;
+        }
+
+        #tooltip.fade-out {
+            animation: fadeOut 1s linear forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"> -->
+    <!-- https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.2/css/all.min.css -->
+    <!-- /assets/font-awesome-all.min.css -->
+     <link rel="stylesheet" href="./assets/easymde.min.css">
+     <script src="./assets/easymde.min.js"></script>
+     <script src="./assets/toolbar.js"></script>
+</head>
+<body>
+    <div class="container">
+        <textarea id="content"></textarea>
+    </div>
+    <div id="overlay"></div>
+    <div id="tooltip" class="hidden"></div>
+    <script>
+        const easyMDE = new EasyMDE({
+          element: document.getElementById('content'),
+          spellChecker: false,
+          //hideIcons: ["guide", "side-by-side", "fullscreen"],
+          toolbar: toolbar,
+          shortcuts: {"task-list":"Cmd-T"}
+        });
+
+        const overlay = document.getElementById('overlay');
+        // 当需要开启遮罩层时
+        function enableOverlay() {
+            overlay.classList.add('active');
+        }
+        // 当需要关闭遮罩层时
+        function disableOverlay() {
+            overlay.classList.remove('active');
+        }
+        function toggleOverlay() {
+            if (overlay.classList.contains('active')) {
+                disableOverlay();
+            } else {
+                enableOverlay();
+            }
+        }
+        function showTooltip(message, delay) {
+            var tooltip = document.getElementById('tooltip');
+            tooltip.textContent = message;
+            tooltip.classList.remove('hidden');
+            setTimeout(function() {
+                tooltip.classList.add('fade-out');
+                setTimeout(function() {
+                    tooltip.classList.add('hidden');
+                    tooltip.classList.remove('fade-out');
+                }, 1000);
+            }, delay || 2000);
+        }
+      </script>
+    <script src='./components/components.js'></script>
+    <script src='./index.js'></script>
+</body>
+</html>

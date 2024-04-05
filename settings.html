@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<HTML>
+<html
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Settings</title>
+<head>
+    <style>
+        body{
+            padding-left: 10px;
+        }
+        #file {
+            width: 80%;
+            height: 24px;
+            line-height: 24px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+        }
+        #select, #submit {
+            position: relative;
+            height: 28px;
+            line-height: 24px;
+            font-size: 14px;
+            border: 2px solid #ccc;
+            background-color: #e5e5e5;
+        }
+        #select:hover{
+            background-color: #d5d5d5;
+            border: 2px solid #92b3f5;
+            box-shadow: 0 0 5px #92b3f5;
+        }
+        #height,#width {
+            width: 60px;
+            height: 24px;
+            line-height: 24px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+        }
+        .times {
+            position: relative;
+            top: -5px;
+            display: inline-block;
+            height: 24px;
+            line-height: 24px;
+            vertical-align: middle;
+            font-size: 18px;
+            padding: 0 5px;
+        }
+        .label {
+            margin: 15px 0 8px 0;
+        }
+        #save{
+            margin-top: 13px;
+            width: 100px;
+            height: 30px;
+            background-color: #4796ec;
+            color: #ffffff;
+            border: 2px solid #4796ec;
+            font-size: 14px;
+            border-radius: 15px;
+        }
+        #save:hover {
+            background-color: #2c7ed7;
+            border: 2px solid #2c7ed7;
+        }
+        #shortcut {
+            width: 250px;
+            height: 24px;
+            line-height: 24px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+        }
+        .shortcut a{
+            margin-left: 10px;
+        }
+        .shortcut a:hover{
+            color: rgb(228, 121, 121);
+        }
+        .external-check-radio [type=radio]{
+            width:24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        .external-check-radio label{
+            margin-left: -6px;
+        }
+        #externalChangeAsk{
+            margin-left: 15px;
+        }
+        .tips{
+            color: #636363;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="label">文件</div>
+<div class="file-selector">
+    <input type="text" id="file" name="file">
+    <input id="select" type="button" value="浏览...">
+</div>
+<div class="label">窗口宽高</div>
+<div class="win-size">
+    <input type="text" id="width" name="width" value="315">
+    <span class="times">&times;</span>
+    <input type="text" id="height" name="height" value="415">
+</div>
+<div class="external-check label">
+    <span>当文件从外部被更改时</span>
+    <span class="tips">(注意：多人编辑可能存在互相覆盖风险！)</span>
+</div>
+<div class="external-check-radio">
+    <input type="radio" id="externalChangeAuto" name="externalChange">
+    <label for="externalChangeAuto">自动加载</label>
+    <input type="radio" id="externalChangeAsk" name="externalChange">
+    <label for="externalChangeAsk">询问我</label>
+</div>
+<div class="label">
+    <span>全局快捷键</span>
+    <span class="tips">(重启生效)</span>
+</div>
+<div class="shortcut">
+    <input type="text" id="shortcut" name="shortcut">
+    <a id="shortcutFormat" href="https://www.electronjs.org/zh/docs/latest/api/accelerator" target="_blank">Help</a>
+</div>
+<div class="label">
+    <input type="submit" id="save" value="保存">
+</div>
+<script src='./settings.js'></script>
+</body>
+</html>

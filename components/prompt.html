@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<HTML>
+<html
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ask</title>
+<head>
+    <style>
+        body{
+            overflow: hidden;
+        }
+        .title {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            width: 100%;
+            height: calc(100vh - 80px);
+        }
+        .buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        #ok, #cancel {
+            width: 100px;
+            height: 30px;
+            background-color: #4796ec;
+            color: #ffffff;
+            border: 2px solid #4796ec;
+            font-size: 14px;
+            border-radius: 15px;
+        }
+        #cancel {
+            background-color: #efefef;
+            color: #333;
+            border: 1px solid #e5e5e5;
+        }
+        #cancel:hover {
+            background-color: #e5e5e5;
+            border: 1px solid #e5e5e5;
+        }
+        #ok{
+            margin-left: 8px;
+        }
+        #ok:hover {
+            background-color: #2c7ed7;
+            border: 2px solid #2c7ed7;
+        }
+    </style>
+</head>
+<body>
+    <div class="title" id="title"></div>
+    <div class="buttons">
+        <input type="button" id="cancel" value="不了">
+        <input type="button" id="ok" value="好的">
+    </div>
+<script>
+    let params = location.search.substring(1);
+    params = JSON.parse(decodeURIComponent(params));
+    document.getElementById('title').innerHTML = params.message || '您确定要继续吗？';
+
+    document.getElementById('ok').onclick = function(){
+        Niva.api.window.sendMessage("ok", params.id-0 || 0);
+        setTimeout(function(){
+            Niva.api.window.close();
+        }, 50);
+    }
+    document.getElementById('cancel').onclick = function(){
+        Niva.api.window.sendMessage("cancel", params.id-0 || 0);
+        setTimeout(function(){
+            Niva.api.window.close();
+        }, 50);
+    }
+</script>
+</body>
+</HTML>
