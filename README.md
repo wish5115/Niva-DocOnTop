@@ -31,6 +31,8 @@ DocOnTop 就是为这个需求而开发的。
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-monokai.png)
 
+![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/no-toolbar.png)
+
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-solarized-light.png)
 
 ![](https://cdn.jsdelivr.net/gh/wish5115/Niva-DocOnTop@main/screenshots/theme-solarized-dark.png)
