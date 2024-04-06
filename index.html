@@ -29,8 +29,20 @@
             height: 24px!important;
         }
         .EasyMDEContainer .CodeMirror{
-            height: calc(100vh - 61px)!important;
+            height: calc(100vh - 59px)!important;
             padding: 5px;
+        }
+        .EasyMDEContainer .CodeMirror.ts-toolbarShowAndStatusShow{
+            height: calc(100vh - 59px)!important;
+        }
+        .EasyMDEContainer .CodeMirror.ts-toolbarHideAndStatusHide{
+            height: 100vh!important;
+        }
+        .EasyMDEContainer .CodeMirror.ts-toolbarShowAndStatusHide{
+            height: calc(100vh - 33px)!important;
+        }
+        .EasyMDEContainer .CodeMirror.ts-toolbarHideAndStatusShow{
+            height: calc(100vh - 26px)!important;
         }
         .editor-statusbar{
             padding: 6px 10px!important;
@@ -192,6 +204,21 @@
                     tooltip.classList.remove('fade-out');
                 }, 1000);
             }, delay || 2000);
+        }
+        // 显示或隐藏工具栏和状态栏
+        // 使用：setToolbarAndStatusVisibility({toolbar:'hide', status: 'hide'})
+        function setToolbarAndStatusVisibility(showOrHide) {
+            document.querySelector(".editor-toolbar").style.display = showOrHide.toolbar === 'show' ? 'block' : 'none';
+            document.querySelector(".editor-statusbar").style.display = showOrHide.status === 'show' ? 'block' : 'none';
+            const editor = document.querySelector(".EasyMDEContainer .CodeMirror")
+            Array.from(editor.classList).forEach(className => {
+                if (className.startsWith('ts-')) {
+                    editor.classList.remove(className);
+                }
+            });
+            const toolbarShowOrHide = showOrHide.toolbar.replace(/^\w/, c => c.toUpperCase())
+            const statusShowOrHide = showOrHide.status.replace(/^\w/, c => c.toUpperCase())
+            editor.classList.add(`ts-toolbar${toolbarShowOrHide}AndStatus${statusShowOrHide}`)
         }
       </script>
     <script src='./components/components.js'></script>

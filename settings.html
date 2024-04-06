@@ -7,7 +7,12 @@
 <head>
     <style>
         body{
-            padding-left: 10px;
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            padding-left: 15px;
+            padding-bottom: 105px;
         }
         #file {
             width: 80%;
@@ -47,10 +52,13 @@
             padding: 0 5px;
         }
         .label {
-            margin: 15px 0 8px 0;
+            margin: 20px 0 8px 0;
+            font-weight: bold;
+        }
+        .label:first-child{
+            margin-top: 15px;
         }
         #save{
-            margin-top: 13px;
             width: 100px;
             height: 30px;
             background-color: #4796ec;
@@ -64,14 +72,14 @@
             border: 2px solid #2c7ed7;
         }
         #shortcut {
-            width: 250px;
+            width: 260px;
             height: 24px;
             line-height: 24px;
             border: 1px solid #ccc;
             font-size: 18px;
         }
-        .shortcut a{
-            margin-left: 10px;
+        .shortcut-help{
+            margin-left: 8px;
         }
         .shortcut a:hover{
             color: rgb(228, 121, 121);
@@ -98,9 +106,52 @@
             width: 150px;
             font-size:18px;
         }
+        .submit-contronl{
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            background-color: #fff;
+            padding: 20px 0 20px 15px;
+            border-top: 1px solid #e8e8e8;
+        }
+        .toolbar-status-shortcut{
+            margin-top: 10px;
+            position: relative;
+        }
+        #toolbar-status-shortcut {
+            width: 200px;
+            height: 24px;
+            line-height: 24px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+            background-color: transparent;
+            padding-left: 60px;
+        }
+        .input-label{
+            position: absolute;
+            z-index: -1;
+            left: 4px;
+            top: 2px;
+        }
+        ::placeholder {
+            /* color: #636363; */
+            font-size: 14px;
+        }
+        #toolbar,#statusbar{
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+        #statusbar{
+            margin-left: 15px;
+        }
+        .toolbar-status label{
+            margin-left: -6px;
+        }
     </style>
 </head>
 <body>
+<div class="container">
 <div class="label">文件</div>
 <div class="file-selector">
     <input type="text" id="file" name="file">
@@ -132,15 +183,29 @@
         <option value="solarized dark">Solarized dark</option>
     </select>
 </div>
+<div class="label">工具栏和状态栏</div>
+<div class="toolbar-status">
+    <input type="checkbox" id="toolbar" name="toolbar">
+    <label for="toolbar">显示工具栏</label>
+    <input type="checkbox" id="statusbar" name="statusbar">
+    <label for="statusbar">显示状态栏</label>
+</div>
+<div class="toolbar-status-shortcut">
+    <span class="input-label">快捷键</span>
+    <!-- placeholder="（重启生效）" -->
+    <input type="text" id="toolbar-status-shortcut" name="toolbar-status-shortcut" >
+    <a class="shortcut-help" href="https://www.electronjs.org/zh/docs/latest/api/accelerator" target="_blank">Help</a>
+</div>
 <div class="label">
     <span>全局快捷键</span>
-    <span class="tips">(重启生效)</span>
+    <!-- <span class="tips">(重启生效)</span> -->
 </div>
 <div class="shortcut">
     <input type="text" id="shortcut" name="shortcut">
-    <a id="shortcutFormat" href="https://www.electronjs.org/zh/docs/latest/api/accelerator" target="_blank">Help</a>
+    <a class="shortcut-help" href="https://www.electronjs.org/zh/docs/latest/api/accelerator" target="_blank">Help</a>
 </div>
-<div class="label">
+</div>
+<div class="submit-contronl">
     <input type="submit" id="save" value="保存">
 </div>
 <script src='./settings.js'></script>

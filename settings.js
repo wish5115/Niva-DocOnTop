@@ -11,6 +11,9 @@
   document.querySelector("#externalChangeAsk").checked = !externalChangeAutoChecked
   document.querySelector("#shortcut").value = localStorage.getItem('shortcut') || 'CommandOrControl+Shift+Backslash'
   document.querySelector("#theme").value = localStorage.getItem('theme') || 'none'
+  document.querySelector("#toolbar").checked = localStorage.getItem('toolbar') === 'show' ? true : false
+  document.querySelector("#statusbar").checked = localStorage.getItem('statusbar') === 'show' ? true : false
+  document.querySelector("#toolbar-status-shortcut").value = localStorage.getItem('toolbar-status-shortcut') || 'CommandOrControl+Shift+/'
 
   // 文件浏览
   document.querySelector("#select").addEventListener("click", async () => {
@@ -25,8 +28,10 @@
   });
 
   //shortcut 帮助
-  document.querySelector("#shortcutFormat").addEventListener("click", async () => {
-    process.open(document.querySelector("#shortcutFormat").href)
+  document.querySelectorAll(".shortcut-help").forEach(item => {
+    item.addEventListener("click", async () => {
+      process.open(item.href)
+    });
   });
 
   //保存设置
@@ -39,12 +44,18 @@
     const externalChange = document.querySelector("#externalChangeAuto").checked
     const shortcut = document.querySelector("#shortcut").value
     const theme = document.querySelector("#theme").value
+    const toolbar = document.querySelector("#toolbar").checked ? 'show' : 'hide'
+    const statusbar = document.querySelector("#statusbar").checked ? 'show' : 'hide'
+    const toolbarStatusShortcut = document.querySelector("#toolbar-status-shortcut").value
     localStorage.setItem('file', file)
     localStorage.setItem('width', width)
     localStorage.setItem('height', height)
     localStorage.setItem('externalChange', externalChange ? '1' : '')
     localStorage.setItem('shortcut', shortcut)
     localStorage.setItem('theme', theme)
+    localStorage.setItem('toolbar', toolbar)
+    localStorage.setItem('statusbar', statusbar)
+    localStorage.setItem('toolbar-status-shortcut', toolbarStatusShortcut)
     save.value = '✓ 保存成功'
     const settings = {
       file: file,
@@ -53,6 +64,9 @@
       externalChange: externalChange,
       shortcut: shortcut,
       theme: theme,
+      toolbar: toolbar,
+      statusbar: statusbar,
+      toolbarStatusShortcut: toolbarStatusShortcut
     }
     await window.sendMessage(JSON.stringify(settings), 0)
     setTimeout(() => {

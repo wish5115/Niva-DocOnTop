@@ -53,6 +53,21 @@
  }
  loadFile(file);
 
+
+ // 初始化toolbar status显示状态，默认显示
+ let showToolbar = localStorage.getItem('toolbar')
+ if(showToolbar === null) {
+  localStorage.setItem('toolbar', 'show')
+  showToolbar = 'show'
+ }
+ let showStatusbar = localStorage.getItem('statusbar')
+ if(showStatusbar === null) {
+  localStorage.setItem('statusbar', 'show')
+  showStatusbar = 'show'
+ }
+ // 控制toolbar status显示状态
+ setToolbarAndStatusVisibility({toolbar: showToolbar, status: showStatusbar})
+
  // 显示窗口
  const width = localStorage.getItem('width')-0 || defWidth
  const height = localStorage.getItem('height')-0 || defHeight
@@ -313,17 +328,35 @@ if(useEditor) {
         easyMDE.codemirror.setOption("theme", settings.theme)
         theme = settings.theme
       }
-      if(settings.shortcut && shortcutKey !== settings.shortcut) {
+      if(settings.toolbar !== showToolbar || settings.statusbar !== showStatusbar) {
+        setToolbarAndStatusVisibility({toolbar: settings.toolbar, status: settings.statusbar})
+        showToolbar = settings.toolbar
+        showStatusbar = settings.statusbar
+        toolbarShowStatus = settings.toolbar
+      }
+      if(shortcutKey !== settings.shortcut) {
         shortcutKey = settings.shortcut
-        try{
-          const hasShortcut = (await shortcut.list()).length > 0
-          if(hasShortcut) await shortcut.unregister(0)
-          await shortcut.register(settings.shortcut.replace("\\", "Backslash"))
-        } catch(e) {
-          openAlert("快捷键格式错误", "")
-          console.log(e)
+        const result = await shortcutRegister(shortcutKey, globalShortcutId)
+        if(result === false) {
+          openAlert("全局快捷键格式错误", "")
+        } else {
+          globalShortcutId = result
+          localStorage.setItem('shortcutId', globalShortcutId)
         }
       }
+      if(toolbarStatusVisibilityShortcutKey !== settings.toolbarStatusShortcut) {
+        toolbarStatusVisibilityShortcutKey = settings.toolbarStatusShortcut
+        const result = await shortcutRegister(toolbarStatusVisibilityShortcutKey, toolbarStatusVisibilityShortcutId)
+        if(result === false) {
+          openAlert("工具和状态栏，快捷键格式错误", "")
+        } else {
+          toolbarStatusVisibilityShortcutId = result
+          localStorage.setItem('toolbar-status-shortcut-id', toolbarStatusVisibilityShortcutId)
+        }
+      }
+      setTimeout(() => {
+        console.log([globalShortcutId,shortcutKey, toolbarStatusVisibilityShortcutId,toolbarStatusVisibilityShortcutKey], "设置保存成功")
+      }, 1000);
     }
   }
 );
@@ -371,7 +404,7 @@ if(useEditor) {
         "alwaysOnTop": true,
         "devtools": true,
         "size": {
-          "height": 465,
+          "height": 485,
           "width": 455
         }
       })
@@ -385,16 +418,110 @@ if(useEditor) {
 
   ////////////////////////////////////// 监听和注册全局快捷键 //////////////////////////////////
 
+  /**
+   * 注册快捷键
+   * 增加 id=undefined 表示新增
+   * 删除 key为空表示删除
+   * 修改 key与注册的key不同表示修改
+   * @param {string} key key为空表示删除; key与注册的key不同表示修改
+   * @param {number|undefined} id id=undefined 表示新增
+   * @returns number|boolean 新增和修改返回id或失败返回false; 删除成功返回undefined或失败返回false
+   */
+  async function shortcutRegister(key, id) {
+    key = key.replace("\\", "Backslash")
+    // 新增
+    if(typeof id === "undefined") {
+      try{
+        const newId = await shortcut.register(key);
+        return newId
+      }catch(e) {
+        console.log(e)
+        return false
+      }
+    }
+
+    // 转换为数字
+    id = id - 0
+
+    // 删除
+    if(key === "") {
+      try{
+        await shortcut.unregister(id)
+        return undefined
+      }catch(e) {
+        console.log(e)
+        return false
+      }
+    }
+
+    // 修改
+    let registeredShortcutKey = ""
+    const list = await shortcut.list()
+    //如果未注册，尝试新增
+    if(list.length === 0) {
+      return await shortcutRegister(key)
+    }
+    // 检测已注册列表是否存在id
+    Array.from(list).forEach(item => {
+      const [registeredId, registeredKey] = item
+      if(registeredId === id) {
+        registeredShortcutKey = registeredKey
+        return false
+      }
+    });
+    //如果没有注册，尝试新增
+    if(!registeredShortcutKey) {
+      return await shortcutRegister(key)
+    }
+    // 如果已存在相同的key，直接返回id
+    if(registeredShortcutKey === key) return id
+
+    // 如果修改则尝试注销再新增
+    try{
+      await shortcut.unregister(id)
+      const newId = await shortcut.register(key);
+      return newId
+    }catch(e) {
+      console.log(e)
+      return false
+    }
+  }
+
   //注册全局快捷键
   //see https://bramblex.github.io/niva/docs/api/shortcut#nivaapishortcutunregister
   //see https://www.tauri.net.cn/82.html
   let shortcutKey = localStorage.getItem('shortcut') || 'CommandOrControl+Shift+Backslash'
-  try{
-    await shortcut.register(shortcutKey.replace("\\", "Backslash"));
-    //await shortcut.register("CommandOrControl+Alt+i");
-  }catch(e) {
-    console.log(e)
+  let globalShortcutId = localStorage.getItem('shortcutId')
+  globalShortcutId = (globalShortcutId === null || globalShortcutId === 'undefined') ? undefined : globalShortcutId
+  const result = await shortcutRegister(shortcutKey, globalShortcutId)
+  if(result !== false) {
+    globalShortcutId = result
+    localStorage.setItem('shortcutId', globalShortcutId)
   }
+
+  // 注册工具栏和状态栏快捷键
+  let toolbarStatusVisibilityShortcutKey = localStorage.getItem('toolbar-status-shortcut') || 'CommandOrControl+Shift+/'
+  let toolbarStatusVisibilityShortcutId = localStorage.getItem('toolbar-status-shortcut-id')
+  toolbarStatusVisibilityShortcutId = (toolbarStatusVisibilityShortcutId === null || toolbarStatusVisibilityShortcutId === 'undefined') ? undefined : toolbarStatusVisibilityShortcutId
+  if(toolbarStatusVisibilityShortcutKey) {
+    const result = await shortcutRegister(toolbarStatusVisibilityShortcutKey, toolbarStatusVisibilityShortcutId)
+    if(result !== false) {
+      toolbarStatusVisibilityShortcutId = result
+      localStorage.setItem('toolbar-status-shortcut-id', toolbarStatusVisibilityShortcutId)
+    }
+  }
+
+  // let shortcutKey = localStorage.getItem('shortcut') || 'CommandOrControl+Shift+Backslash'
+  // let toolbarStatusVisibilityKey = localStorage.getItem('toolbar-status-shortcut') || ''
+  // try{
+  //   await shortcut.register(shortcutKey.replace("\\", "Backslash"));
+  //   //await shortcut.register("CommandOrControl+Alt+i");
+  //   if(toolbarStatusVisibilityKey) {
+  //     await shortcut.register(toolbarStatusVisibilityKey.replace("\\", "Backslash"));
+  //   }
+  // }catch(e) {
+  //   console.log(e)
+  // }
 
 function showWindow() {
     window.setFocus();
@@ -434,10 +561,12 @@ function hideWindow() {
     }
   }
 
+  let toolbarShowStatus = showToolbar;
   Niva.addEventListener('shortcut.emit', (_, id) => {
-    if (id === 0) {
+    console.log("shortcut.emit:", [id, globalShortcutId, toolbarStatusVisibilityShortcutId]);
+    //全局快捷键
+    if (id === globalShortcutId) {
       (async () => {
-
         // const currentActiveWindow = await Niva.api.extra.getActiveWindow();
         // console.log("currentActiveWindow:", currentActiveWindow);
         const [isVisible, isFocused] = await Promise.all([window.isVisible(), window.isFocused()]);
@@ -455,6 +584,16 @@ function hideWindow() {
           showWindow();
         }
       })();
+    }
+    // 工具栏和状态栏快捷
+    if(id === toolbarStatusVisibilityShortcutId) {
+      if(toolbarShowStatus === 'show'){
+        toolbarShowStatus = 'hide'
+        setToolbarAndStatusVisibility({toolbar: 'hide', status: 'hide'})
+      } else {
+        toolbarShowStatus = 'show'
+        setToolbarAndStatusVisibility({toolbar: 'show', status: 'show'})
+      }
     }
     // if (id === 1) {
     //   webview.openDevtools();
