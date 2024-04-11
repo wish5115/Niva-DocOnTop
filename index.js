@@ -523,12 +523,17 @@ if(useEditor) {
   //   console.log(e)
   // }
 
-function showWindow() {
+async function showWindow() {
     window.setFocus();
-    window.setVisible(true);
-    setTimeout(() => {
+    const [isMinimized] = await Promise.all([window.isMinimized()]);
+    if(isMinimized) {
+      window.setMinimized(false);
+    } else {
+      window.setVisible(true);
+    }
+    //setTimeout(() => {
       //document.getElementById('content').focus()
-    }, 300)
+    //}, 300)
 }
 function hideWindow() {
   window.setVisible(false);
